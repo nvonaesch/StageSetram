@@ -1,7 +1,3 @@
-$(document).ready(function () {
-
-});
-
 $.get('data.csv', function (csv) {
     $('#container').highcharts({
         data: {
@@ -12,7 +8,7 @@ $.get('data.csv', function (csv) {
         },
 
         subtitle: {
-            text: 'Data input from CSV'
+            text: "Valeur de la vibration"
         },
         plotOptions: {
             series: {
@@ -25,7 +21,7 @@ $.get('data.csv', function (csv) {
                 lineWidth: 1
             }, {
                 type: 'areaspline',
-                color: '#c4392d',
+                color: '#ff0000',
                 negativeColor: '#5679c4',
                 fillOpacity: 0.5
             }]
