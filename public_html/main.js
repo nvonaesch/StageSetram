@@ -1,3 +1,4 @@
+
 $.get('data.csv', function (csv) {
     $('#container').highcharts({
         data: {
@@ -18,11 +19,9 @@ $.get('data.csv', function (csv) {
             }
         },
         series: [{
-                lineWidth: 1
-            }, {
-                type: 'areaspline',
+                lineWidth: 1,
+                type: 'line',
                 color: '#ff0000',
-                negativeColor: '#5679c4',
                 fillOpacity: 0.5
             }]
     });
