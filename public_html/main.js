@@ -1,11 +1,34 @@
-$(document).ready(function (){
-    $("#boutonConf").click(afficherGraph);
+$(document).ready(function () {
+    $("#boutonConf").click(traitement);
 });
 
-function afficherGraph()
+function traitement()
 {
-    let fichiercsv = $('#btnFileUpload').val();
-    alert(fichiercsv);
+
+    if (!$('#btnFileUpload')[0].files.length)
+    {
+        alert("Please choose at least one file to parse.");
+    }
+
+    let fichiercsv = $('#btnFileUpload').parse({
+        config: {delimiter: "", // auto-detect
+            newline: "", // auto-detect
+            quoteChar: '"',
+            delimitersToGuess: [',', '\t', '|', ';', Papa.RECORD_SEP, Papa.UNIT_SEP],
+        },
+        before: function (file, inputElem)
+        {
+            console.log("Parsing file...", file);
+        },
+        error: function (err, file)
+        {
+            console.log("ERROR:", err, file);
+        },
+        complete: function ()
+        {
+            console.log("Done with all files");
+        }
+    });
     $.get(fichiercsv, function (csv) {
         $('#container').highcharts({
             data: {
@@ -14,7 +37,6 @@ function afficherGraph()
             title: {
                 text: "Hauteur de l'axe z"
             },
-
             subtitle: {
                 text: "Valeur de la vibration"
             },

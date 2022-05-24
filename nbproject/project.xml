@@ -5,5 +5,10 @@
         <data xmlns="http://www.netbeans.org/ns/clientside-project/1">
             <name>Projet_Setram</name>
         </data>
+        <libraries xmlns="http://www.netbeans.org/ns/cdnjs-libraries/1">
+            <library name="PapaParse" version="5.3.2">
+                <file localPath="public_html/js/libs/PapaParse/papaparse.min.js" path="papaparse.min.js"/>
+            </library>
+        </libraries>
     </configuration>
 </project>
