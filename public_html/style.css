@@ -1,2 +1,25 @@
-
-
+#logo{
+    position: relative;
+    width: 450px;
+    bottom: 29px;
+    right: 26px;
+}
+#logotram{
+    position: relative;
+    width: 101px;
+    left: 781px;
+    bottom: 44px;  
+}
+#texteselection{
+    position: relative;
+    color: orange;
+    left: 350px;
+}
+#btnFileUpload{
+    position: relative;
+    left: 400px;
+}
+#boutonConf{
+    position: relative;
+    top: 34px;
+}
