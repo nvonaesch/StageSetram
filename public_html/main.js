@@ -1,5 +1,6 @@
 $(document).ready(function () {
     $("#boutonConf").click(traitement);
+    $("#logo").click(redirection)
 });
 
 function traitement()
@@ -7,18 +8,19 @@ function traitement()
 
     if (!$('#btnFileUpload')[0].files.length)
     {
-        alert("Please choose at least one file to parse.");
+        alert("Choisissez un seul fichier csv.");
     }
 
-    let fichiercsv = $('#btnFileUpload').parse({
-        config: {delimiter: "", // auto-detect
+    $('#btnFileUpload').parse({
+        config: {
+            delimiter: "", // auto-detect
             newline: "", // auto-detect
             quoteChar: '"',
             delimitersToGuess: [',', '\t', '|', ';', Papa.RECORD_SEP, Papa.UNIT_SEP],
         },
         before: function (file, inputElem)
         {
-            console.log("Parsing file...", file);
+            console.log("Analyse du fichier...", file);
         },
         error: function (err, file)
         {
@@ -26,9 +28,11 @@ function traitement()
         },
         complete: function ()
         {
-            console.log("Done with all files");
+            var fichiercsv = this.fileData;
+            alert("Analyse complétée");
         }
     });
+    
     $.get(fichiercsv, function (csv) {
         $('#container').highcharts({
             data: {
@@ -55,4 +59,7 @@ function traitement()
                 }]
         });
     });
+}
+function redirection() {
+    window.location.replace("http://setram.fr");
 }

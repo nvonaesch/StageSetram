@@ -11,8 +11,9 @@
         <script src="//code.highcharts.com/modules/data.js"></script> 
         <script src="//code.highcharts.com/modules/exporting.js"></script>
         <script src="js/libs/PapaParse/papaparse.min.js"></script>
-        <!-- fichier données et js -->
+        <!-- fichier données, js, favicon -->
         <link href="style.css" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" type="image/png" sizes="32x32" href="images/icone.png"/>
         <script src="main.js"></script>
     </head>
     <body>
@@ -21,9 +22,9 @@
             <img id="logotram" src="images/logo_tram.png" alt=""/>
         </div>
         <form>
-            <label for="btnFileUpload" id="texteselection">Veuillez sélectionner le fichier .csv</label>
+            <label for="btnFileUpload" id="texteselection">Sélectionnez un fichier csv.</label>
             <input type="file" id="btnFileUpload" accept=".csv"/>
-            <input type="button" id="boutonConf" value="Veuillez appuyer ici après la sélection de votre fichier"/>
+            <input type="button" id="boutonConf" value="Appuyer sur le bouton une fois le fichier sélectionné"/>
             <div id="container"></div>
         </form>
     </body>

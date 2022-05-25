@@ -4,6 +4,9 @@
     bottom: 29px;
     right: 26px;
 }
+#logo:hover{
+    cursor: pointer;
+}
 #logotram{
     position: relative;
     width: 101px;
@@ -12,12 +15,13 @@
 }
 #texteselection{
     position: relative;
-    color: orange;
+    color: purple;
     left: 350px;
+    font-weight: bold;
 }
 #btnFileUpload{
     position: relative;
-    left: 400px;
+    left: 380px;
 }
 #boutonConf{
     position: relative;
