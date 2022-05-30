@@ -1,39 +1,30 @@
 $(document).ready(function () {
-    $("#boutonConf").click(traitement);
-    $("#logo").click(redirection)
+    $("#logo").click(redirection);
+    $("#btnFileUpload").change(handleFileSelect);
 });
 
-function traitement()
-{
+var data;
 
-    if (!$('#btnFileUpload')[0].files.length)
-    {
-        alert("Choisissez un seul fichier csv.");
-    }
+function redirection() {
+    window.location.replace("http://setram.fr");
+}
 
-    $('#btnFileUpload').parse({
-        config: {
-            delimiter: "", // auto-detect
-            newline: "", // auto-detect
-            quoteChar: '"',
-            delimitersToGuess: [',', '\t', '|', ';', Papa.RECORD_SEP, Papa.UNIT_SEP],
-        },
-        before: function (file, inputElem)
-        {
-            console.log("Analyse du fichier...", file);
-        },
-        error: function (err, file)
-        {
-            console.log("ERROR:", err, file);
-        },
-        complete: function ()
-        {
-            var fichiercsv = this.fileData;
-            alert("Analyse complétée");
+function handleFileSelect(evt) {
+    var file = evt.target.files[0];
+
+    Papa.parse(file, {
+        header: true,
+        dynamicTyping: true,
+        complete: function (results) {
+            data = results;
+            console.log(data);
+            afficherGraph();
         }
     });
-    
-    $.get(fichiercsv, function (csv) {
+}
+
+function afficherGraph(data){
+    $.get(data, function (csv) {
         $('#container').highcharts({
             data: {
                 csv: csv
@@ -59,7 +50,4 @@ function traitement()
                 }]
         });
     });
-}
-function redirection() {
-    window.location.replace("http://setram.fr");
 }
