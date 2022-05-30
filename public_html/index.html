@@ -5,26 +5,34 @@
         <title>Chocs Pantographes</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
         <!--libs-->
+        
         <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>    
         <script src="//code.highcharts.com/highcharts.js"></script>
         <script src="//code.highcharts.com/modules/data.js"></script> 
         <script src="//code.highcharts.com/modules/exporting.js"></script>
-        <script src="js/libs/PapaParse/papaparse.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
+        
         <!-- fichier données, js, favicon -->
+        
         <link href="style.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" type="image/png" sizes="32x32" href="images/icone.png"/>
         <script src="main.js"></script>
     </head>
+    
     <body>
+        
         <div id="Entete">
             <img id="logo" src="images/logo.png" alt=""/>
             <img id="logotram" src="images/logo_tram.png" alt=""/>
         </div>
+        
         <form>
             <label for="btnFileUpload" id="texteselection">Sélectionnez un fichier csv.</label>
             <input type="file" id="btnFileUpload" accept=".csv"/>
             <div id="container"></div>
         </form>
+        
     </body>
 </html>

@@ -10,6 +10,7 @@ function redirection() {
 }
 
 function handleFileSelect(evt) {
+    $("#texteselection").hide();
     var file = evt.target.files[0];
 
     Papa.parse(file, {
@@ -18,12 +19,13 @@ function handleFileSelect(evt) {
         complete: function (results) {
             data = results;
             console.log(data);
-            afficherGraph();
+            afficherGraph(data);
         }
     });
 }
 
 function afficherGraph(data){
+    console.log(data);
     $.get(data, function (csv) {
         $('#container').highcharts({
             data: {
