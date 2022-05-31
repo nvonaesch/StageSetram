@@ -19,47 +19,54 @@ function handleFileSelect(evt) {
         header: true,
         dynamicTyping: true,
         complete: function (results) {
-            for(var i = 0; i < results.data.length ; i++){
-                vibration.push(results.data[i].Vibration+2004); //2004 étant la valeur par défaut de l'accélération
+            for (var i = 0; i < results.data.length; i++) {
+                vibration.push(results.data[i].Vibration + 2004); //2004 étant la valeur par défaut de l'accélération
                 //console.log(vibration[i]);
-            };
+            }
+            ;
             console.log('Vibration:' + vibration.toString());
-            
+
             afficherGraph();
         }
     });
 }
 
-function afficherGraph(){
+function afficherGraph() {
     //console.log(vibration);
     $(function () {
-            $('#container').highcharts({
-                chart: {
-                    type: 'line'
-                },
+        $('#container').highcharts({
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Vibration sur le Pantographe'
+            },
+            yAxis: {
                 title: {
-                    text: 'Vibration sur le Pantographe'
+                    text: "Valeur de l'accélération linéaire"
                 },
-                yAxis: {
-                    title: {
-                        text: "Valeur de l'accélération linéaire"
-                    }
-                },
-                plotOptions: {
-                    line: {
-                        dataLabels: {
-                            enabled: false
-                        },
-                        enableMouseTracking: true
-                    }
-                },
-                series: [{
+                plotBands: [{
+                        color: '#f7eabe',
+                        width: 1,
+                        from: 500,
+                        to: -1100
+                    }]
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: false
+                    },
+                    enableMouseTracking: true
+                }
+            },
+            series: [{
                     name: 'Vibration',
                     data: vibration,
                     color: '#a81c84',
                     lineWidth: 0.8
                 }]
-            });
         });
+    });
 
 }
