@@ -5,6 +5,7 @@ $(document).ready(function () {
 
 var vibration = [];
 
+
 function redirection() {
     window.location.replace("http://setram.fr");
 }
@@ -20,15 +21,17 @@ function handleFileSelect(evt) {
         complete: function (results) {
             for(var i = 0; i < results.data.length ; i++){
                 vibration.push(results.data[i].Vibration+2004); //2004 étant la valeur par défaut de l'accélération
+                //console.log(vibration[i]);
             };
             console.log('Vibration:' + vibration.toString());
+            
             afficherGraph();
         }
     });
 }
 
 function afficherGraph(){
-    console.log(vibration);
+    //console.log(vibration);
     $(function () {
             $('#container').highcharts({
                 chart: {

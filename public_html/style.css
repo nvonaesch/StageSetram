@@ -2,7 +2,7 @@
     position: relative;
     width: 450px;
     bottom: 29px;
-    right: 26px;
+    right: 1%;
 }
 #logo:hover{
     cursor: pointer;
@@ -10,7 +10,7 @@
 #logotram{
     position: relative;
     width: 101px;
-    left: 781px;
+    left: 90%;
     bottom: 44px;  
 }
 #texteselection{
