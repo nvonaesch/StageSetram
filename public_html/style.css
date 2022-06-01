@@ -33,6 +33,7 @@
     margin: 0 auto;
 }
 #carte {
-    height: 100px;
-    width: 100px;
+    position: absolute;
+    height: 500px;
+    width: 1000px;
 }

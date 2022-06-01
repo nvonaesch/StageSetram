@@ -73,9 +73,7 @@ function geolocalisation()
 
 
 }
-// affichage de la carte au chargement de la page
-// via l'appel à la fonction initCarte
-$(window).on('load', initCarte);
+
 
 
 $(document).ready(function () {

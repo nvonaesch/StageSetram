@@ -14,11 +14,8 @@
         <script src="//code.highcharts.com/modules/exporting.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
         
-        <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.8.0/leaflet.css"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.8.0/leaflet.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.8.0/leaflet-src.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.8.0/leaflet.js.map"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.8.0/leaflet-src.js.map"></script>
+        <link href="js/libs/leaflet/leaflet.css" rel="stylesheet" type="text/css"/>
+        <script src="js/libs/leaflet/leaflet.js"></script>
         
         <!-- fichier données, js, favicon -->
         
@@ -38,7 +35,8 @@
             <label for="csv" id="texteselection">Sélectionnez un fichier csv.</label>
             <input type="file" id="csv" accept=".csv"/>
             <div id="container"></div>
-            <input type="button" id="initCarte" value="Afficher Marqueurs"/>
+            <input type="button" id="initCarte" value="Afficher Carte"/>
+            <input type="button" id="initMarqueur" value="Afficher Marqueur"/>
             <div id="carte"></div>
         </form>
         

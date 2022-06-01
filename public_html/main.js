@@ -2,31 +2,44 @@ $(document).ready(function () {
     $("#logo").click(redirection);
     $("#csv").change(selectionFichierAnalyse);
     $("#initCarte").click('load', initCarte);
+    $("#initMarqueur").click(ajouterMarqueurChoc);
 });
 
 var vibration = [];
-
 var longitude = [];
 var latitude = [];
 var latmans = 48.00611;
 var lonmans = 0.199556;
 var groupe = new L.featureGroup();
+var maCarte = null;
 
+//Sert à initialiser la carte de Leaflet
 function initCarte() {
-    maCarte = L.map('carte').setView([latmans, lonmans], 10);
+    maCarte = L.map('carte').setView([latmans, lonmans], 15);
     L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
         attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
-        minZoom: 1,
-        maxZoom: 19
+        minZoom: 10,
+        maxZoom: 18
     }).addTo(maCarte);
     console.log("Carte initialisée");
 }
-
-
+//Sert à ajouter les marqueurs si un choc est détecté
+function ajouterMarqueurChoc() {
+    for (var i = 0; i < longitude.length; i++) {
+        if (vibration[i] > 0 && latitude[i] !== null) {
+            marqueur = L.marker([latitude[i], longitude[i]]).addTo(maCarte);
+            marqueur.bindPopup("Accélération Linéaire au moment du choc : " + vibration[i] +" <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]);
+            groupe.addLayer(marqueur);
+            //maCarte.fitBounds(groupe.getBounds());
+            console.log(marqueur);
+        }
+    }
+}
+//Sert à rediriger l'utilisateur vers le site de la SETRAM lorsqu'il clique sur le logo
 function redirection() {
     window.location.replace("https://setram.fr");
 }
-
+//Sert à lire les données du fichier csv issus de la carte SD et les mettre dans des tableaux
 function selectionFichierAnalyse(evt) {
     $("#texteselection").hide();
     $("#csv").hide();
@@ -43,13 +56,14 @@ function selectionFichierAnalyse(evt) {
                 longitude.push(results.data[i].Longitude);
                 latitude.push(results.data[i].Latitude);
                 //console.log(vibration[i]);
-            };
+            }
+            ;
             //console.log('Vibration:' + vibration.toString());
             afficherGraph();
         }
     });
 }
-
+//Sert à afficher le graphique en ligne
 function afficherGraph() {
     //console.log(vibration);
     $(function () {
