@@ -1,31 +1,18 @@
-#logo{
-    position: relative;
-    width: 450px;
-    bottom: 29px;
-    right: 1%;
-}
 #logo:hover{
     cursor: pointer;
 }
-#logotram{
-    position: relative;
-    width: 101px;
-    left: 90%;
-    bottom: 44px;  
+.top{
+    height: 140px;
+}
+#logo{
+    height: 165px;
+}
+.logo-tram{
+    height: 150px;
 }
 #texteselection{
-    position: relative;
-    color: purple;
-    left: 350px;
+    color: white;
     font-weight: bold;
-}
-#btnFileUpload{
-    position: relative;
-    left: 380px;
-}
-#boutonConf{
-    position: relative;
-    top: 34px;
 }
 #container {
     min-width: 310px;
@@ -33,7 +20,14 @@
     margin: 0 auto;
 }
 #carte {
+    min-width: 310px;
+    height: 600px;
+    margin: 0 auto;
+}
+.fichier{
+    height: 38px;
+    background-color:#a81c84; 
+}
+#btnMarqueur{
     position: absolute;
-    height: 500px;
-    width: 1000px;
 }

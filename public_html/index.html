@@ -5,40 +5,61 @@
         <title>Chocs Pantographes</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
         <!--libs-->
-        
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>    
+        <link href="js/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>   
+        <script src="js/libs/bootstrap/js/bootstrap.min.js"></script>
+
+
         <script src="//code.highcharts.com/highcharts.js"></script>
         <script src="//code.highcharts.com/modules/data.js"></script> 
         <script src="//code.highcharts.com/modules/exporting.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
-        
+
         <link href="js/libs/leaflet/leaflet.css" rel="stylesheet" type="text/css"/>
         <script src="js/libs/leaflet/leaflet.js"></script>
-        
+
         <!-- fichier données, js, favicon -->
-        
+
         <link href="style.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" type="image/png" sizes="32x32" href="images/icone.png"/>
         <script src="main.js"></script>
     </head>
-    
+
     <body>
-        
-        <div id="Entete">
-            <img id="logo" src="images/logo.png" alt=""/>
-            <img id="logotram" src="images/logo_tram.png" alt=""/>
-        </div>
-        
-        <form>
-            <label for="csv" id="texteselection">Sélectionnez un fichier csv.</label>
-            <input type="file" id="csv" accept=".csv"/>
-            <div id="container"></div>
-            <input type="button" id="initCarte" value="Afficher Carte"/>
-            <input type="button" id="initMarqueur" value="Afficher Marqueur"/>
-            <div id="carte"></div>
-        </form>
-        
+        <main>
+            <header>
+                <div class="container-fluid top">
+                    <img id="logo" class="float-left logo" src="images/logo.png" alt=""/>
+                    <img class="float-right logo-tram" src="images/logo_tram.png" alt=""/>
+                </div>
+            </header>
+
+            <div class="grid-container fichier">
+                <label class="text-center" for="csv" id="texteselection">Sélectionnez le fichier csv de la carte microSD.</label>
+                <input class="btn btn-success" type="file" id="csv" accept=".csv"/>
+            </div>
+
+            <ul class="nav nav-tabs nav-justified">
+                <li class="nav-item">
+                    <a href="#tab-courbe" class="nav-link  active" data-toggle="tab" >Courbe des mesures</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#tab-carte" class="nav-link" data-toggle="tab" >Carte des chocs</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="tab-courbe">
+                    <div id="courbe"></div>
+                </div>
+                <div role="tabpanel" class="tab-pane " id="tab-carte">
+                    <div id="carte">
+                    </div>
+                    <input type="button" class="btn btn-danger" id="btnMarqueur" value="Ajouter les marqueurs des chocs détectés">
+                </div>
+            </div>
+        </main>
     </body>
 </html>

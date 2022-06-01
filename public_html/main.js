@@ -1,8 +1,8 @@
 $(document).ready(function () {
     $("#logo").click(redirection);
     $("#csv").change(selectionFichierAnalyse);
-    $("#initCarte").click('load', initCarte);
-    $("#initMarqueur").click(ajouterMarqueurChoc);
+    $("#csv").change('load', initCarte);
+    $("#btnMarqueur").click(ajouterMarqueurChoc);
 });
 
 var vibration = [];
@@ -12,9 +12,10 @@ var latmans = 48.00611;
 var lonmans = 0.199556;
 var groupe = new L.featureGroup();
 var maCarte = null;
-
+    
 //Sert à initialiser la carte de Leaflet
 function initCarte() {
+    $("#container").hide();
     maCarte = L.map('carte').setView([latmans, lonmans], 15);
     L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
         attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
@@ -30,8 +31,7 @@ function ajouterMarqueurChoc() {
             marqueur = L.marker([latitude[i], longitude[i]]).addTo(maCarte);
             marqueur.bindPopup("Accélération Linéaire au moment du choc : " + vibration[i] +" <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]);
             groupe.addLayer(marqueur);
-            //maCarte.fitBounds(groupe.getBounds());
-            console.log(marqueur);
+            maCarte.fitBounds(groupe.getBounds());
         }
     }
 }
@@ -41,8 +41,6 @@ function redirection() {
 }
 //Sert à lire les données du fichier csv issus de la carte SD et les mettre dans des tableaux
 function selectionFichierAnalyse(evt) {
-    $("#texteselection").hide();
-    $("#csv").hide();
     var file = evt.target.files[0];
 
     Papa.parse(file, {
@@ -67,7 +65,7 @@ function selectionFichierAnalyse(evt) {
 function afficherGraph() {
     //console.log(vibration);
     $(function () {
-        $('#container').highcharts({
+        $('#courbe').highcharts({
             chart: {
                 type: 'line'
             },
