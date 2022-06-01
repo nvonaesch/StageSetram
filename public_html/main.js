@@ -17,7 +17,7 @@ var maCarte = null;
 function initCarte() {
     $("#container").hide();
     maCarte = L.map('carte').setView([latmans, lonmans], 15);
-    L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+    L.tileLayer('http://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
         attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
         minZoom: 10,
         maxZoom: 18
@@ -41,6 +41,7 @@ function redirection() {
 }
 //Sert à lire les données du fichier csv issus de la carte SD et les mettre dans des tableaux
 function selectionFichierAnalyse(evt) {
+    
     var file = evt.target.files[0];
 
     Papa.parse(file, {
@@ -53,24 +54,20 @@ function selectionFichierAnalyse(evt) {
                 vibration.push(results.data[i].Vibration + 2004); //2004 étant la valeur par défaut de l'accélération linéique
                 longitude.push(results.data[i].Longitude);
                 latitude.push(results.data[i].Latitude);
-                //console.log(vibration[i]);
-            }
-            ;
-            //console.log('Vibration:' + vibration.toString());
+            };
             afficherGraph();
         }
     });
 }
 //Sert à afficher le graphique en ligne
 function afficherGraph() {
-    //console.log(vibration);
     $(function () {
         $('#courbe').highcharts({
             chart: {
                 type: 'line'
             },
             title: {
-                text: 'Vibration sur le Pantographe'
+                text: 'Vibrations sur le Pantographe'
             },
             yAxis: {
                 title: {
@@ -99,5 +96,4 @@ function afficherGraph() {
                 }]
         });
     });
-
 }
