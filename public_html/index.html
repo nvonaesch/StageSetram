@@ -37,12 +37,12 @@
                 </div>
             </header>
 
-            <div class="grid-container fichier">
+            <div class="grid-container fichier col-md-12 text-center">
                 <label class="text-center" for="csv" id="texteselection">Sélectionnez le fichier csv de la carte microSD.</label>
                 <input class="btn btn-success" type="file" id="csv" accept=".csv"/>
             </div>
 
-            <ul class="nav nav-tabs nav-justified">
+            <ul class="nav nav-tabs nav-justified col-md-12 text-center" id="navigation" >
                 <li class="nav-item ">
                     <a href="#tab-courbe" class="nav-link nav-tabs active" data-toggle="tab" >Courbe des mesures</a>
                 </li>
@@ -51,14 +51,14 @@
                 </li>
             </ul>
 
-            <div class="tab-content">
+            <div class="tab-content" id="navigation2">
                 <div role="tabpanel" class="tab-pane active" id="tab-courbe">
                     <div id="courbe"></div>
                 </div>
-                <div role="tabpanel" class="tab-pane " id="tab-carte">
+                <div role="tabpanel" class="tab-pane col-md-12 text-center " id="tab-carte">
+                    <input type="button" class="btn btn-primary custom-btn" id="btnMarqueur" value="Ajouter les marqueurs des chocs détectés">
                     <div id="carte">
                     </div>
-                    <input type="button" class="btn btn-danger" id="btnMarqueur" value="Ajouter les marqueurs des chocs détectés">
                 </div>
             </div>
         </main>

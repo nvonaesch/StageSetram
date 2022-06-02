@@ -14,20 +14,15 @@
     color: white;
     font-weight: bold;
 }
-#container {
-    min-width: 310px;
-    height: 400px;
-    margin: 0 auto;
-}
 #carte {
     min-width: 310px;
     height: 600px;
     margin: 0 auto;
 }
 .fichier{
-    height: 38px;
     background-color:#a81c84; 
 }
-#btnMarqueur{
-    position: relative;
+.btn-primary.custom-btn {
+	background-color: #CC4E0F;
+	border-color: #CC4E0F;
 }

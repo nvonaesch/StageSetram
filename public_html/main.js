@@ -3,7 +3,9 @@ $(document).ready(function () {
     $("#csv").change(selectionFichierAnalyse);
     $("#csv").change('load', initCarte);
     $("#btnMarqueur").click(ajouterMarqueurChoc);
+    $("#navigation").hide();
 });
+
 
 var vibration = [];
 var longitude = [];
@@ -15,7 +17,7 @@ var maCarte = null;
     
 //Sert à initialiser la carte de Leaflet
 function initCarte() {
-    $("#container").hide();
+    $("#navigation").show();
     maCarte = L.map('carte').setView([latmans, lonmans], 15);
     L.tileLayer('http://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
         attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
@@ -41,7 +43,7 @@ function redirection() {
 }
 //Sert à lire les données du fichier csv issus de la carte SD et les mettre dans des tableaux
 function selectionFichierAnalyse(evt) {
-    
+    $("#navigation").show();
     var file = evt.target.files[0];
 
     Papa.parse(file, {
