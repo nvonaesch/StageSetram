@@ -7,8 +7,6 @@ $(document).ready(function () {
 });
 
 var vibrationx = [];
-var vibrationy = [];
-var vibrationz = [];
 var longitude = [];
 var latitude = [];
 var latmans = 48.00611;
@@ -16,10 +14,19 @@ var lonmans = 0.199556;
 var groupe = new L.featureGroup();
 var maCarte = null;
 var max;
+var cptMarq = 0;
+var MarqueurRouge = new L.Icon({
+  iconUrl: '//raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+  shadowUrl: '//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
 
 //Sert à rediriger l'utilisateur vers le site de la SETRAM lorsqu'il clique sur le logo
 function redirection() {
-    window.location.replace("https://setram.fr");
+    window.location.replace("//setram.fr");
 }
 //Sert à lire les données du fichier csv issus de la carte SD et les mettre dans des tableaux
 function selectionFichierAnalyse(evt) {
@@ -33,13 +40,13 @@ function selectionFichierAnalyse(evt) {
         skipEmptyLines: true,
         complete: function (results) {
             for (var i = 0; i < results.data.length; i++) {
-                vibrationz.push(results.data[i].VibrationZ );
-                vibrationy.push(results.data[i].VibrationY );
-                vibrationx.push(results.data[i].VibrationX );
+                vibrationx.push(results.data[i].VibrationX);
                 longitude.push(results.data[i].Longitude);
                 latitude.push(results.data[i].Latitude);
-            };
-            max = Math.max(vibrationz);
+            }
+            ;
+            max = Math.max.apply(null, vibrationx);
+            console.log(max);
             afficherGraph();
         }
     });
@@ -70,13 +77,7 @@ function afficherGraph() {
             yAxis: {
                 title: {
                     text: "Valeur de l'accélération linéaire"
-                },
-                plotBands: [{
-                        color: '#f7eabe',
-                        width: 1,
-                        from: 500,
-                        to: -1100
-                    }]
+                }
             },
             plotOptions: {
                 line: {
@@ -87,25 +88,11 @@ function afficherGraph() {
                 }
             },
             series: [{
-                    marker:{
-                    name: 'Vibration Axe Z',
-                    color: '#FF0000',
-                    lineWidth: 0.8
-                },
-                data: vibrationz},{
-                marker:{
-                    name: 'Vibration Axe Y',
-                    color: '#00FF00',
-                    lineWidth: 0.8
-                },
-                data: vibrationy},{
-                marker:{
-                    name: 'Vibration Axe X',
-                    color: '#0000FF',
-                    lineWidth: 0.8
-                },
-                data: vibrationx}
-                ]
+                    color: '#000000',
+                    lineWidth: 0.8,
+                    data: vibrationx,
+                    name: 'Vibration'}
+            ]
         });
     });
 }
@@ -113,11 +100,20 @@ function afficherGraph() {
 //Sert à ajouter les marqueurs si un choc est détecté
 function ajouterMarqueurChoc() {
     for (var i = 0; i < longitude.length; i++) {
-        if (vibrationx[i] > max*0.95 && latitude[i] !== null) {
-            marqueur = L.marker([latitude[i], longitude[i]]).addTo(maCarte);
-            marqueur.bindPopup("Accélération Linéaire au moment du choc : " + vibrationx[i] +" <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]);
-            groupe.addLayer(marqueur);
-            maCarte.fitBounds(groupe.getBounds());
+        if ( vibrationx[i] > 12000 || vibrationx[i] < 100 && latitude[i] !== null) { //vibrationx[i] > 7900 || vibrationx[i] < 100
+            if(vibrationx[i] === max){
+                marqueurmax = L.marker([latitude[i],longitude[i]], {icon: MarqueurRouge}).addTo(maCarte);
+                marqueurmax.bindPopup("Accélération Linéaire au moment du choc : " + vibrationx[i] + " <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]);
+                groupe.addLayer(marqueurmax);
+                maCarte.fitBounds(groupe.getBounds());
+            }else{
+                marqueur = L.marker([latitude[i], longitude[i]]).addTo(maCarte);
+                marqueur.bindPopup("Accélération Linéaire au moment du choc : " + vibrationx[i] + " <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]);
+                groupe.addLayer(marqueur);
+                maCarte.fitBounds(groupe.getBounds());
+            }
+            cptMarq++;
         }
     }
+    console.log(cptMarq);
 }
