@@ -2,11 +2,12 @@ $(document).ready(function () {
     $("#logo").click(redirection);
     $("#csv").change(selectionFichierAnalyse);
     $("#csv").change('load', initCarte);
+    $("#btnMarqueur").click(trouverPics);
     $("#btnMarqueur").click(ajouterMarqueurChoc);
     $("#navigation").hide();
 });
 
-var vibrationx = [];
+var vibration = [];
 var longitude = [];
 var latitude = [];
 var latmans = 48.00611;
@@ -14,15 +15,18 @@ var lonmans = 0.199556;
 var groupe = new L.featureGroup();
 var maCarte = null;
 var max;
+var min;
 var cptMarq = 0;
 var MarqueurRouge = new L.Icon({
   iconUrl: '//raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
   shadowUrl: '//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [25, 41],
+  iconSize: [28, 46],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
 });
+var somme = 0;
+var moyenne;
 
 //Sert à rediriger l'utilisateur vers le site de la SETRAM lorsqu'il clique sur le logo
 function redirection() {
@@ -40,13 +44,14 @@ function selectionFichierAnalyse(evt) {
         skipEmptyLines: true,
         complete: function (results) {
             for (var i = 0; i < results.data.length; i++) {
-                vibrationx.push(results.data[i].VibrationX);
+                vibration.push(results.data[i].VibrationX);
                 longitude.push(results.data[i].Longitude);
                 latitude.push(results.data[i].Latitude);
-            }
-            ;
-            max = Math.max.apply(null, vibrationx);
-            console.log(max);
+            };
+            max = Math.max.apply(null, vibration);
+            min = Math.min.apply(null, vibration);
+            console.log("Valeur du choc maximale: " + max);
+            console.log("Valeur du choc minimale: " + min);
             afficherGraph();
         }
     });
@@ -84,36 +89,46 @@ function afficherGraph() {
                     dataLabels: {
                         enabled: false
                     },
-                    enableMouseTracking: true
+                    enableMouseTracking: false
                 }
             },
             series: [{
                     color: '#000000',
                     lineWidth: 0.8,
-                    data: vibrationx,
+                    data: vibration,
                     name: 'Vibration'}
             ]
         });
     });
 }
-
+//Nous sert ici à trouver les pics de notre tableau de valeurs
+function trouverPics() {
+    let precedent;
+    let suivant;
+    moyenne = vibration.reduce((a, b) => a+b, 0) / vibration.length;
+    console.log(moyenne);
+    return vibration.filter((curr, idx, arr) => {
+        if (idx > 0) {precedent = arr[idx - 1];}if (idx < (arr.length - 1)){suivant = arr[idx + 1];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 2];}if (idx < (arr.length - 2)) {suivant = arr[idx + 2];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 3];}if (idx < (arr.length - 3)) {suivant = arr[idx + 3];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 4];}if (idx < (arr.length - 4)) {suivant = arr[idx + 4];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 5];}if (idx < (arr.length - 5)) {suivant = arr[idx + 5];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}
+    return true;
+    });
+}
 //Sert à ajouter les marqueurs si un choc est détecté
 function ajouterMarqueurChoc() {
-    for (var i = 0; i < longitude.length; i++) {
-        if ( vibrationx[i] > 12000 || vibrationx[i] < 100 && latitude[i] !== null) { //vibrationx[i] > 7900 || vibrationx[i] < 100
-            if(vibrationx[i] === max){
+    console.log(trouverPics());
+    for (var i = 250; i < longitude.length; i++) {
+        if ( vibration[i] > (moyenne+max)*0.55 || vibration[i] < (moyenne+min)*0.25 && latitude[i] !== null ) {
+            if(vibration[i] === max){
                 marqueurmax = L.marker([latitude[i],longitude[i]], {icon: MarqueurRouge}).addTo(maCarte);
-                marqueurmax.bindPopup("Accélération Linéaire au moment du choc : " + vibrationx[i] + " <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]);
+                marqueurmax.bindPopup("Accélération Linéaire au moment du choc : " + vibration[i] + " <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]);
                 groupe.addLayer(marqueurmax);
-                maCarte.fitBounds(groupe.getBounds());
             }else{
                 marqueur = L.marker([latitude[i], longitude[i]]).addTo(maCarte);
-                marqueur.bindPopup("Accélération Linéaire au moment du choc : " + vibrationx[i] + " <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]);
+                marqueur.bindPopup("Accélération Linéaire au moment du choc : " + vibration[i] + " <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]);
                 groupe.addLayer(marqueur);
-                maCarte.fitBounds(groupe.getBounds());
             }
             cptMarq++;
         }
     }
-    console.log(cptMarq);
+    maCarte.fitBounds(groupe.getBounds());
+    console.log(cptMarq+" Marqueurs de chocs ajoutés");
 }
