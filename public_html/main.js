@@ -2,14 +2,12 @@ $(document).ready(function () {
     $("#logo").click(redirection);
     $("#csv").change(selectionFichierAnalyse);
     $("#csv").change('load', initCarte);
-    $("#btnMarqueur").click(trouverPics);
-    $("#btnMarqueur").click(ajouterMarqueurChoc);
+    $("#btnToutMarqueur").click(trouverPics);
+    $("#btnToutMarqueur").click(ajouterMarqueurChoc);
     $("#navigation").hide();
 });
 
-var vibration = [];
-var longitude = [];
-var latitude = [];
+var vibration = [],longitude = [],latitude = [];
 var latmans = 48.00611;
 var lonmans = 0.199556;
 var groupe = new L.featureGroup();
@@ -19,6 +17,14 @@ var min;
 var cptMarq = 0;
 var MarqueurRouge = new L.Icon({
   iconUrl: '//raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+  shadowUrl: '//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [28, 46],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var MarqueurOrange = new L.Icon({
+  iconUrl: '//raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
   shadowUrl: '//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [28, 46],
   iconAnchor: [12, 41],
@@ -101,34 +107,48 @@ function afficherGraph() {
         });
     });
 }
+
 //Nous sert ici à trouver les pics de notre tableau de valeurs
 function trouverPics() {
     let precedent;
     let suivant;
-    moyenne = vibration.reduce((a, b) => a+b, 0) / vibration.length;
-    console.log(moyenne);
-    return vibration.filter((curr, idx, arr) => {
-        if (idx > 0) {precedent = arr[idx - 1];}if (idx < (arr.length - 1)){suivant = arr[idx + 1];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 2];}if (idx < (arr.length - 2)) {suivant = arr[idx + 2];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 3];}if (idx < (arr.length - 3)) {suivant = arr[idx + 3];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 4];}if (idx < (arr.length - 4)) {suivant = arr[idx + 4];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 5];}if (idx < (arr.length - 5)) {suivant = arr[idx + 5];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}
-    return true;
-    });
-}
-//Sert à ajouter les marqueurs si un choc est détecté
-function ajouterMarqueurChoc() {
-    console.log(trouverPics());
-    for (var i = 250; i < longitude.length; i++) {
-        if ( vibration[i] > (moyenne+max)*0.55 || vibration[i] < (moyenne+min)*0.25 && latitude[i] !== null ) {
-            if(vibration[i] === max){
-                marqueurmax = L.marker([latitude[i],longitude[i]], {icon: MarqueurRouge}).addTo(maCarte);
-                marqueurmax.bindPopup("Accélération Linéaire au moment du choc : " + vibration[i] + " <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]);
-                groupe.addLayer(marqueurmax);
-            }else{
-                marqueur = L.marker([latitude[i], longitude[i]]).addTo(maCarte);
-                marqueur.bindPopup("Accélération Linéaire au moment du choc : " + vibration[i] + " <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]);
-                groupe.addLayer(marqueur);
-            }
-            cptMarq++;
+    moyenne = parseInt(vibration.reduce((a, b) => a+b, 0) / vibration.length);
+    for(var i=0; i<longitude.length; i++){
+        if(vibration[i] < moyenne){
+            let diff = moyenne-vibration[i];
+            vibration[i] = moyenne+diff;
+        } else {
+            break;
         }
     }
-    maCarte.fitBounds(groupe.getBounds());
-    console.log(cptMarq+" Marqueurs de chocs ajoutés");
+    return vibration.filter((curr, idx, arr) => {
+        if (idx > 0) {precedent = arr[idx - 1];}if (idx < (arr.length - 1)){suivant = arr[idx + 1];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 2];}if (idx < (arr.length - 2)) {suivant = arr[idx + 2];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 3];}if (idx < (arr.length - 3)) {suivant = arr[idx + 3];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 4];}if (idx < (arr.length - 4)) {suivant = arr[idx + 4];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 5];}if (idx < (arr.length - 5)) {suivant = arr[idx + 5];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}if (idx > 0) {precedent = arr[idx -6];}if (idx < (arr.length - 6)){suivant = arr[idx + 6];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 7];}if (idx < (arr.length - 7)){suivant = arr[idx + 7];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 8];}if (idx < (arr.length - 8)){suivant = arr[idx + 8];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 9];}if (idx < (arr.length - 9)){suivant = arr[idx + 9];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 10];}if (idx < (arr.length - 10)){suivant = arr[idx + 10];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}}
+    return true;
+    });
+}   
+
+//Sert à ajouter les marqueurs si un choc est  détecté
+function ajouterMarqueurChoc() {
+    for (var i = 250; i < longitude.length; i++) {
+        if (vibration[i] === max) {
+            marqueurmax = L.marker([latitude[i], longitude[i]], {icon: MarqueurRouge}).addTo(maCarte).bindPopup("Accélération Linéaire au moment du choc : " + vibration[i] + " <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]);
+            groupe.addLayer(marqueurmax);
+            cptMarq++;
+            maCarte.fitBounds(groupe.getBounds());
+        }
+        if (vibration[i] > (moyenne + max) * 0.49 && vibration[i] <= (moyenne + max) * 0.60 && latitude[i] !== null) {
+            marqueur = L.marker([latitude[i], longitude[i]]).bindPopup("Accélération Linéaire au moment du choc : " + vibration[i] + " <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]).addTo(maCarte);
+            groupe.addLayer(marqueur);
+            cptMarq++;
+            maCarte.fitBounds(groupe.getBounds());
+        }
+        if (vibration[i] > (moyenne + max) * 0.60 && vibration[i] < (moyenne + max) * 0.99 && latitude[i] !== null) {
+            marqueurmoy = L.marker([latitude[i], longitude[i]], {icon: MarqueurOrange}).addTo(maCarte).bindPopup("Accélération Linéaire au moment du choc : " + vibration[i] + " <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]);
+            groupe.addLayer(marqueurmoy);
+            cptMarq++;
+            maCarte.fitBounds(groupe.getBounds());
+        }
+    }
+    console.log(cptMarq + " Marqueurs de chocs ajoutés");
+
 }

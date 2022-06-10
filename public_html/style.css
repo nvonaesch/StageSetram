@@ -22,7 +22,11 @@
 .fichier{
     background-color:#a81c84; 
 }
-.btn-primary.custom-btn {
+.btn-primary.btnorange {
     background-color: #CC4E0F;
     border-color: #CC4E0F;
+}
+.btn-primary.btnrouge {
+    background-color: #FF0000;
+    border-color: #FF0000;
 }
