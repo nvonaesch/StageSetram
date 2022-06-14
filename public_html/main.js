@@ -5,6 +5,8 @@ $(document).ready(function () {
     $("#btnToutMarqueur").click(trouverPics);
     $("#btnToutMarqueur").click(ajouterMarqueurChoc);
     $("#navigation").hide();
+    $("#btnModal").hide();
+    $("#btnModal").click(afficherInfoCompl);
 });
 
 var vibration = [],longitude = [],latitude = [];
@@ -33,7 +35,11 @@ var MarqueurOrange = new L.Icon({
 });
 var somme = 0;
 var moyenne;
-
+function afficherInfoCompl(){
+    $("#moyenne").text("Valeur moyenne des mesures: " + moyenne);
+    $("#chochaut").text("Valeur maximum des mesures: " + max);
+    $("#nbrchoc").text("Nombre de chocs détectés: "+ cptMarq);
+}
 //Sert à rediriger l'utilisateur vers le site de la SETRAM lorsqu'il clique sur le logo
 function redirection() {
     window.location.replace("//setram.fr");
@@ -67,7 +73,7 @@ function selectionFichierAnalyse(evt) {
 function initCarte() {
     $("#navigation").show();
     maCarte = L.map('carte').setView([latmans, lonmans], 15);
-    L.tileLayer('http://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+    L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
         attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
         minZoom: 10,
         maxZoom: 18
@@ -121,8 +127,9 @@ function trouverPics() {
             break;
         }
     }
+    console.log("Moyenne des valeurs: " + moyenne);
     return vibration.filter((curr, idx, arr) => {
-        if (idx > 0) {precedent = arr[idx - 1];}if (idx < (arr.length - 1)){suivant = arr[idx + 1];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 2];}if (idx < (arr.length - 2)) {suivant = arr[idx + 2];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 3];}if (idx < (arr.length - 3)) {suivant = arr[idx + 3];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 4];}if (idx < (arr.length - 4)) {suivant = arr[idx + 4];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 5];}if (idx < (arr.length - 5)) {suivant = arr[idx + 5];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}if (idx > 0) {precedent = arr[idx -6];}if (idx < (arr.length - 6)){suivant = arr[idx + 6];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 7];}if (idx < (arr.length - 7)){suivant = arr[idx + 7];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 8];}if (idx < (arr.length - 8)){suivant = arr[idx + 8];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 9];}if (idx < (arr.length - 9)){suivant = arr[idx + 9];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 10];}if (idx < (arr.length - 10)){suivant = arr[idx + 10];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}}
+        if (idx > 0) {precedent = arr[idx - 1];}if (idx < (arr.length - 1)){suivant = arr[idx + 1];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 2];}if (idx < (arr.length - 2)) {suivant = arr[idx + 2];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 3];}if (idx < (arr.length - 3)) {suivant = arr[idx + 3];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 4];}if (idx < (arr.length - 4)) {suivant = arr[idx + 4];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 5];}if (idx < (arr.length - 5)) {suivant = arr[idx + 5];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}if (idx > 0) {precedent = arr[idx -6];}if (idx < (arr.length - 6)){suivant = arr[idx + 6];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 7];}if (idx < (arr.length - 7)){suivant = arr[idx + 7];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 8];}if (idx < (arr.length - 8)){suivant = arr[idx + 8];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 9];}if (idx < (arr.length - 9)){suivant = arr[idx + 9];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 10];}if (idx < (arr.length - 10)){suivant = arr[idx + 10];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 11];}if (idx < (arr.length - 11)){suivant = arr[idx + 11];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 12];}if (idx < (arr.length - 12)){suivant = arr[idx + 12];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 13];}if (idx < (arr.length - 13)){suivant = arr[idx + 13];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 14];}if (idx < (arr.length - 14)){suivant = arr[idx + 14];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 15];}if (idx < (arr.length - 15)){suivant = arr[idx + 15];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 16];}if (idx < (arr.length - 16)){suivant = arr[idx + 16];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 17];}if (idx < (arr.length - 17)){suivant = arr[idx + 17];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 18];}if (idx < (arr.length - 18)){suivant = arr[idx + 18];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 19];}if (idx < (arr.length - 19)){suivant = arr[idx + 19];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 20];}if (idx < (arr.length - 20)){suivant = arr[idx + 20];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}}
     return true;
     });
 }   
@@ -150,5 +157,5 @@ function ajouterMarqueurChoc() {
         }
     }
     console.log(cptMarq + " Marqueurs de chocs ajoutés");
-
+    $("#btnModal").show();
 }

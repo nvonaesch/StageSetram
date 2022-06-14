@@ -24,7 +24,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
         <link rel="manifest" href="images/site.webmanifest">
-        
+
         <script src="main.js"></script>
     </head>
 
@@ -57,6 +57,26 @@
                 </div>
                 <div role="tabpanel" class="tab-pane col-md-12 text-center " id="tab-carte">
                     <input type="button" class="btn btn-primary btnorange" id="btnToutMarqueur" value="Montrer tous les Chocs">
+                    <button id="btnModal" data-toggle="modal" data-target="#myModal" class="btn btn-primary btnorange">Informations complémentaires</button>
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Informations complémentaires</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p id="chochaut" ></p>
+                                    <p id="moyenne"></p>
+                                    <p id="nbrchoc"></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                     <div id="carte">
                     </div>
                 </div>
