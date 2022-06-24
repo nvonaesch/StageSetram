@@ -10,16 +10,16 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>   
         <script src="js/libs/bootstrap/js/bootstrap.min.js"></script>
         <script src="//code.highcharts.com/highcharts.js"></script>
-        <script src="//code.highcharts.com/modules/data.js"></script> 
+        <script src="//code.highcharts.com/modules/data.js"></script>
         <script src="//code.highcharts.com/modules/exporting.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
-
-        <link href="js/libs/leaflet/leaflet.css" rel="stylesheet" type="text/css"/>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" referrerpolicy="no-referrer"></script>
         <script src="js/libs/leaflet/leaflet.js"></script>
 
         <!-- fichier données, js, favicon -->
 
         <link href="style.css" rel="stylesheet" type="text/css"/>
+        <link href="js/libs/leaflet/leaflet.css" rel="stylesheet" type="text/css"/>
         <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
@@ -32,8 +32,8 @@
         <main>
             <header>
                 <div class="container-fluid top">
-                    <img id="logo" class="float-left logo" src="images/logo.png" alt=""/>
-                    <img class="float-right logo-tram" src="images/logo_tram.png" alt=""/>
+                    <img id="logo" class="float-left logo" src="images/logo.png" alt="imagelogo"/>
+                    <img class="float-right logo-tram" src="images/logo_tram.png" alt="imagelogo"/>
                 </div>
             </header>
 
@@ -58,6 +58,7 @@
                 <div role="tabpanel" class="tab-pane col-md-12 text-center " id="tab-carte">
                     <input type="button" class="btn btn-primary btnorange" id="btnToutMarqueur" value="Montrer tous les Chocs">
                     <button id="btnModal" data-toggle="modal" data-target="#myModal" class="btn btn-primary btnorange">Informations complémentaires</button>
+                    <button id="btnCentrer" class="btn btn-primary btnjaune">Adapter la vue</button>
                     <div class="modal fade" id="myModal" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">

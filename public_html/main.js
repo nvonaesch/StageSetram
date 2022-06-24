@@ -6,16 +6,17 @@ $(document).ready(function () {
     $("#btnToutMarqueur").click(ajouterMarqueurChoc);
     $("#navigation").hide();
     $("#btnModal").hide();
+    $("#btnCentrer").hide();
     $("#btnModal").click(afficherInfoCompl);
+    $("#btnCentrer").click(centrerVue);
 });
 
-var vibration = [],longitude = [],latitude = [];
+var vibration = [] , longitude = [], latitude = [], diff = [];
 var latmans = 48.00611;
 var lonmans = 0.199556;
 var groupe = new L.featureGroup();
 var maCarte = null;
-var max;
-var min;
+var max, min;
 var cptMarq = 0;
 var MarqueurRouge = new L.Icon({
   iconUrl: '//raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
@@ -55,7 +56,7 @@ function selectionFichierAnalyse(evt) {
         dynamicTyping: true,
         skipEmptyLines: true,
         complete: function (results) {
-            for (var i = 0; i < results.data.length; i++) {
+            for (var i = 1; i < results.data.length; i++) {
                 vibration.push(results.data[i].VibrationX);
                 longitude.push(results.data[i].Longitude);
                 latitude.push(results.data[i].Latitude);
@@ -116,46 +117,56 @@ function afficherGraph() {
 
 //Nous sert ici à trouver les pics de notre tableau de valeurs
 function trouverPics() {
-    let precedent;
-    let suivant;
-    moyenne = parseInt(vibration.reduce((a, b) => a+b, 0) / vibration.length);
-    for(var i=0; i<longitude.length; i++){
-        if(vibration[i] < moyenne){
-            let diff = moyenne-vibration[i];
-            vibration[i] = moyenne+diff;
+    moyenne = parseInt(vibration.reduce((a, b) => a + b, 0) / vibration.length);
+    for (var i = 0; i < vibration.length; i++) {
+        if (vibration[i] < 0) {
+            diff[i] = moyenne - vibration[i];
+            vibration[i] = diff[i];
         } else {
-            break;
-        }
-    }
+
+        }}
+    console.log(diff);
     console.log("Moyenne des valeurs: " + moyenne);
+    MiseEnPlaceFiltre();
+}
+
+function MiseEnPlaceFiltre() {
+    var precedent;
+    var suivant;
     return vibration.filter((curr, idx, arr) => {
         if (idx > 0) {precedent = arr[idx - 1];}if (idx < (arr.length - 1)){suivant = arr[idx + 1];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 2];}if (idx < (arr.length - 2)) {suivant = arr[idx + 2];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 3];}if (idx < (arr.length - 3)) {suivant = arr[idx + 3];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 4];}if (idx < (arr.length - 4)) {suivant = arr[idx + 4];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 5];}if (idx < (arr.length - 5)) {suivant = arr[idx + 5];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}if (idx > 0) {precedent = arr[idx -6];}if (idx < (arr.length - 6)){suivant = arr[idx + 6];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 7];}if (idx < (arr.length - 7)){suivant = arr[idx + 7];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 8];}if (idx < (arr.length - 8)){suivant = arr[idx + 8];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 9];}if (idx < (arr.length - 9)){suivant = arr[idx + 9];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 10];}if (idx < (arr.length - 10)){suivant = arr[idx + 10];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 11];}if (idx < (arr.length - 11)){suivant = arr[idx + 11];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 12];}if (idx < (arr.length - 12)){suivant = arr[idx + 12];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 13];}if (idx < (arr.length - 13)){suivant = arr[idx + 13];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 14];}if (idx < (arr.length - 14)){suivant = arr[idx + 14];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 15];}if (idx < (arr.length - 15)){suivant = arr[idx + 15];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 16];}if (idx < (arr.length - 16)){suivant = arr[idx + 16];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 17];}if (idx < (arr.length - 17)){suivant = arr[idx + 17];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 18];}if (idx < (arr.length - 18)){suivant = arr[idx + 18];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 19];}if (idx < (arr.length - 19)){suivant = arr[idx + 19];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}if (idx > 0) {precedent = arr[idx - 20];}if (idx < (arr.length - 20)){suivant = arr[idx + 20];}if (precedent) {if (precedent > curr) {return false;}}if (suivant) {if (suivant > curr) {return false;}}}
-    return true;
+            return true;
     });
-}   
+}
 
 //Sert à ajouter les marqueurs si un choc est  détecté
 function ajouterMarqueurChoc() {
-    for (var i = 250; i < longitude.length; i++) {
+    max = Math.max.apply(null, vibration);
+    for (var i = 0; i < vibration.length; i++) {
         if (vibration[i] === max) {
             marqueurmax = L.marker([latitude[i], longitude[i]], {icon: MarqueurRouge}).addTo(maCarte).bindPopup("Accélération Linéaire au moment du choc : " + vibration[i] + " <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]);
             groupe.addLayer(marqueurmax);
             cptMarq++;
-            maCarte.fitBounds(groupe.getBounds());
         }
-        if (vibration[i] > (moyenne + max) * 0.49 && vibration[i] <= (moyenne + max) * 0.60 && latitude[i] !== null) {
+        if (vibration[i] > max*0.97 && vibration[i] < max* 0.98) {
             marqueur = L.marker([latitude[i], longitude[i]]).bindPopup("Accélération Linéaire au moment du choc : " + vibration[i] + " <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]).addTo(maCarte);
             groupe.addLayer(marqueur);
             cptMarq++;
             maCarte.fitBounds(groupe.getBounds());
         }
-        if (vibration[i] > (moyenne + max) * 0.60 && vibration[i] < (moyenne + max) * 0.99 && latitude[i] !== null) {
+        if (vibration[i] >= max* 0.98 && vibration[i] <= max * 0.99) {
             marqueurmoy = L.marker([latitude[i], longitude[i]], {icon: MarqueurOrange}).addTo(maCarte).bindPopup("Accélération Linéaire au moment du choc : " + vibration[i] + " <br/> Longitude : " + longitude[i] + "<br/> Latitude :" + latitude[i]);
             groupe.addLayer(marqueurmoy);
             cptMarq++;
-            maCarte.fitBounds(groupe.getBounds());
         }
     }
+    maCarte.fitBounds(groupe.getBounds());
     console.log(cptMarq + " Marqueurs de chocs ajoutés");
     $("#btnModal").show();
+    $("#btnCentrer").show();
+    $("#btnToutMarqueur").hide();
+}
+
+function centrerVue(){
+    maCarte.fitBounds(groupe.getBounds());
 }

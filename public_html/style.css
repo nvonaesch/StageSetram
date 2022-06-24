@@ -16,8 +16,10 @@
 }
 #carte {
     min-width: 310px;
+    position: relative;
     height: 600px;
     margin: 0 auto;
+    z-index: 1;
 }
 .fichier{
     background-color:#a81c84; 
@@ -29,4 +31,8 @@
 .btn-primary.btnrouge {
     background-color: #FF0000;
     border-color: #FF0000;
+}
+.btn-primary.btnjaune {
+    background-color: #a81c84;
+    border-color: #a81c84;
 }
