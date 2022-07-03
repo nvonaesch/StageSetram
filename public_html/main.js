@@ -20,7 +20,7 @@ var cptMarq = 0;
 var MarqueurRouge = new L.Icon({
     iconUrl: '//raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
     shadowUrl: '//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [28, 46],
+    iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
@@ -28,7 +28,7 @@ var MarqueurRouge = new L.Icon({
 var MarqueurOrange = new L.Icon({
     iconUrl: '//raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
     shadowUrl: '//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [28, 46],
+    iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
@@ -79,7 +79,7 @@ function initCarte() {
         maxZoom: 20
     }).addTo(maCarte);
     console.log("Carte initialisée");
-    setInterval(function() {   maCarte.invalidateSize(); }, 100);
+    setInterval(function() {   maCarte.invalidateSize(); }, 1);
 }
 
 //Sert à afficher le graphique en ligne
@@ -119,27 +119,12 @@ function afficherGraph() {
 function trouverPics() {
     moyenne = parseInt(vibration.reduce((a, b) => a + b, 0) / vibration.length);
     vibration = vibration.filter((curr, idx, arr) => {
-        if (idx > 0) {
-            precedent = arr[idx - 1];
+        for (let i=0;i<40;i++){
+            if (idx > 0) {
+            precedent = arr[idx - i];
         }
-        if (idx < (arr.length - 1)) {
-            suivant = arr[idx + 1];
-        }
-        if (precedent) {
-            if (precedent > curr) {
-                return false;
-            }
-        }
-        if (suivant) {
-            if (suivant > curr) {
-                return false;
-            }
-        }
-        if (idx > 0) {
-            precedent = arr[idx - 2];
-        }
-        if (idx < (arr.length - 2)) {
-            suivant = arr[idx + 2];
+        if (idx < (arr.length - i)) {
+            suivant = arr[idx + i];
         }
         if (precedent) {
             if (precedent > curr) {
@@ -151,216 +136,7 @@ function trouverPics() {
                 return false;
             }
         }
-        if (idx > 0) {
-            precedent = arr[idx - 3];
-        }
-        if (idx < (arr.length - 3)) {
-            suivant = arr[idx + 3];
-        }
-        if (precedent) {
-            if (precedent > curr) {
-                return false;
-            }
-        }
-        if (suivant) {
-            if (suivant > curr) {
-                return false;
-            }
-        }
-        if (idx > 0) {
-            precedent = arr[idx - 4];
-        }
-        if (idx < (arr.length - 4)) {
-            suivant = arr[idx + 4];
-        }
-        if (precedent) {
-            if (precedent > curr) {
-                return false;
-            }
-        }
-        if (suivant) {
-            if (suivant > curr) {
-                return false;
-            }
-        }
-        if (idx > 0) {
-            precedent = arr[idx - 5];
-        }
-        if (idx < (arr.length - 5)) {
-            suivant = arr[idx + 5];
-        }
-        if (precedent) {
-            if (precedent > curr) {
-                return false;
-            }
-        }
-        if (suivant) {
-            if (suivant > curr) {
-                return false;
-            }
-        }
-        
-        if (idx > 0) {
-            precedent = arr[idx - 6];
-        }
-        if (idx < (arr.length - 6)) {
-            suivant = arr[idx + 6];
-        }
-        if (precedent) {
-            if (precedent > curr) {
-                return false;
-            }
-        }
-        if (suivant) {
-            if (suivant > curr) {
-                return false;
-            }
-        }
-        if (idx > 0) {
-            precedent = arr[idx - 7];
-        }
-        if (idx < (arr.length - 7)) {
-            suivant = arr[idx + 7];
-        }
-        if (precedent) {
-            if (precedent > curr) {
-                return false;
-            }
-        }
-        if (suivant) {
-            if (suivant > curr) {
-                return false;
-            }
-        }
-        if (idx > 0) {
-            precedent = arr[idx - 8];
-        }
-        if (idx < (arr.length - 8)) {
-            suivant = arr[idx + 8];
-        }
-        if (precedent) {
-            if (precedent > curr) {
-                return false;
-            }
-        }
-        if (suivant) {
-            if (suivant > curr) {
-                return false;
-            }
-        }
-        if (idx > 0) {
-            precedent = arr[idx - 9];
-        }
-        if (idx < (arr.length - 9)) {
-            suivant = arr[idx + 9];
-        }
-        if (precedent) {
-            if (precedent > curr) {
-                return false;
-            }
-        }
-        if (suivant) {
-            if (suivant > curr) {
-                return false;
-            }
-        }
-        if (idx > 0) {
-            precedent = arr[idx - 10];
-        }
-        if (idx < (arr.length - 10)) {
-            suivant = arr[idx + 10];
-        }
-        if (precedent) {
-            if (precedent > curr) {
-                return false;
-            }
-        }
-        if (suivant) {
-            if (suivant > curr) {
-                return false;
-            }
-        }
-        if (idx > 0) {
-            precedent = arr[idx - 11];
-        }
-        if (idx < (arr.length - 11)) {
-            suivant = arr[idx + 11];
-        }
-        if (precedent) {
-            if (precedent > curr) {
-                return false;
-            }
-        }
-        if (suivant) {
-            if (suivant > curr) {
-                return false;
-            }
-        }
-        if (idx > 0) {
-            precedent = arr[idx - 12];
-        }
-        if (idx < (arr.length - 12)) {
-            suivant = arr[idx + 12];
-        }
-        if (precedent) {
-            if (precedent > curr) {
-                return false;
-            }
-        }
-        if (suivant) {
-            if (suivant > curr) {
-                return false;
-            }
-        }
-        if (idx > 0) {
-            precedent = arr[idx - 13];
-        }
-        if (idx < (arr.length - 13)) {
-            suivant = arr[idx + 13];
-        }
-        if (precedent) {
-            if (precedent > curr) {
-                return false;
-            }
-        }
-        if (suivant) {
-            if (suivant > curr) {
-                return false;
-            }
-        }
-        if (idx > 0) {
-            precedent = arr[idx - 14];
-        }
-        if (idx < (arr.length - 14)) {
-            suivant = arr[idx + 14];
-        }
-        if (precedent) {
-            if (precedent > curr) {
-                return false;
-            }
-        }
-        if (suivant) {
-            if (suivant > curr) {
-                return false;
-            }
-        }
-        if (idx > 0) {
-            precedent = arr[idx - 15];
-        }
-        if (idx < (arr.length - 15)) {
-            suivant = arr[idx + 15];
-        }
-        if (precedent) {
-            if (precedent > curr) {
-                return false;
-            }
-        }
-        if (suivant) {
-            if (suivant > curr) {
-                return false;
-            }
-        }
-        
+    }
         return true && longitudetraitee.push(longitude[idx]) && latitudetraitee.push(latitude[idx]);
     });
 }
@@ -373,6 +149,7 @@ function ajouterMarqueurChoc() {
             marqueurmax = L.marker([latitudetraitee[i], longitudetraitee[i]], {icon: MarqueurRouge}).addTo(maCarte).bindPopup("Accélération Linéaire au moment du choc : " + vibration[i] + " <br/> Longitude : " + longitudetraitee[i] + "<br/> Latitude :" + latitudetraitee[i]);
             groupe.addLayer(marqueurmax);
             cptMarq++;
+            chocprimaire.push(latitudetraitee[i], longitudetraitee[i]);
         }
         if (vibration[i] > max * 0.80 && vibration[i] < max * 0.90) {
             marqueur = L.marker([latitudetraitee[i], longitudetraitee[i]]).bindPopup("Accélération Linéaire au moment du choc : " + vibration[i] + " <br/> Longitude : " + longitudetraitee[i] + "<br/> Latitude :" + latitudetraitee[i]).addTo(maCarte);
@@ -383,6 +160,7 @@ function ajouterMarqueurChoc() {
         if (vibration[i] >= max * 0.90 && vibration[i] <= max * 0.99) {
             marqueurmoy = L.marker([latitudetraitee[i], longitudetraitee[i]], {icon: MarqueurOrange}).addTo(maCarte).bindPopup("Accélération Linéaire au moment du choc : " + vibration[i] + " <br/> Longitude : " + longitudetraitee[i] + "<br/> Latitude :" + latitudetraitee[i]);
             groupe.addLayer(marqueurmoy);
+            chocsecondaire.push(vibration[i],latitudetraitee[i], longitudetraitee[i]);
             cptMarq++;
         }
     }
@@ -398,6 +176,10 @@ function centrerVue() {
 }
 
 function telechargerRecap() {
-    var fichier = new Blob(["Valeur Moyenne: " + moyenne," Valeur Maximum: " + max," Valeur Minimum: " + min ," Nombre de choc(s) enregistrés: " + cptMarq],{type: "text/plain;charset=utf-8"});
+    var texte = "Valeur Moyenne: "+moyenne+" Valeur Maximum: "+max+" Valeur Minimum: "+min+" Nombre de choc(s) enregistrés: " +cptMarq+"\nCoordonnées du choc primaire: "+chocprimaire+" https://www.google.com/maps/place/"+chocprimaire;
+//    for(i=1;i<chocsecondaire.length;i++){
+//        texte=texte+"\n"+ "Valeur du choc:"+chocsecondaire[i]+"Coordonnées du choc: "+chocsecondaire[i+1]+chocsecondaire[i+2];
+//    }
+    var fichier = new Blob([texte],{type: "text/plain;charset=utf-8"});
     saveAs(fichier, "Recapitulatif.txt");
 }
